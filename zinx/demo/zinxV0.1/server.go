@@ -1,7 +1,7 @@
 package main
 
 import (
-	"zinx/znet"
+	"src/znet"
 )
 
 func main() {
