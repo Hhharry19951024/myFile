@@ -11,10 +11,10 @@ type BaseRouter struct{}
 */
 
 // 在处理conn业务之前的钩子方法Hook
-func (br *BaseRouter) PreHandle(request zinterface.IRequest) {}
+func (br *BaseRouter) PreHandle(req zinterface.IRequest) {}
 
 // 在处理conn业务的主方法Hook
-func (br *BaseRouter) Handle(request zinterface.IRequest) {}
+func (br *BaseRouter) Handle(req zinterface.IRequest) {}
 
 // 在处理conn业务之后的钩子方法Hook
-func (br *BaseRouter) PostHandle(request zinterface.IRequest) {}
+func (br *BaseRouter) PostHandle(req zinterface.IRequest) {}

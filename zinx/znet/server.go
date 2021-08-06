@@ -1,7 +1,6 @@
 package znet
 
 import (
-	"errors"
 	"fmt"
 	"net"
 	"src/zinterface"
@@ -13,7 +12,6 @@ type Server struct {
 	IPVersrion string // 服务器IP版本
 	IP         string // 服务器监听IP
 	Port       int    // 服务器监听端口
-
 	//当前Server添加一个router，server注册的链接对应处理业务
 	Router zinterface.IRouter
 }
@@ -28,17 +26,6 @@ func NewServer(name string) zinterface.IServer {
 	}
 
 	return s
-}
-
-// 定义当前客户端链接的绑定handle api，应该优化由用户自定义
-func CallBackToClient(conn *net.TCPConn, data []byte, cnt int) error {
-	// 回显业务
-	fmt.Println("[Conn Handle]  CallBackToClient...")
-	if _, err := conn.Write(data[:cnt]); err != nil {
-		fmt.Println("write back buf err ", err)
-		return errors.New("CallBackToClient error")
-	}
-	return nil
 }
 
 func (s *Server) Start() {
@@ -82,6 +69,7 @@ func (s *Server) Start() {
 }
 
 func (s *Server) Stop() {
+	fmt.Println("[STOP] Zinx server , name ", s.Name)
 	// TODO
 }
 

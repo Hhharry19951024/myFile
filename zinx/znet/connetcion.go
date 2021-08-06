@@ -43,7 +43,12 @@ func (c *Connection) Start() {
 	go c.StartReader()
 
 	// TODO 启动当前链接的写数据业务
-
+	for {
+		select {
+		case <-c.ExitChan:
+			return
+		}
+	}
 }
 
 // 停止链接，结束链接工作
@@ -57,6 +62,9 @@ func (c *Connection) Stop() {
 
 	// 关闭socket链接
 	c.Conn.Close()
+
+	// 通知缓冲队列读取数据业务，该链接已关闭
+	c.ExitChan <- true
 
 	// 回收资源
 	close(c.ExitChan)
@@ -94,6 +102,7 @@ func (c *Connection) StartReader() {
 		_, err := c.Conn.Read(buf)
 		if err != nil {
 			fmt.Println("recv buf error ", err)
+			c.ExitChan <- true
 			continue
 		}
 

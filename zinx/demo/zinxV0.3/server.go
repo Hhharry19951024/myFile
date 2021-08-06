@@ -16,27 +16,27 @@ type PingRouter struct {
 }
 
 // Test PreHander
-func (p *PingRouter) PreHander(request zinterface.IRequest) {
+func (p *PingRouter) PreHandle(request zinterface.IRequest) {
 	fmt.Println("Test Call Router PreHander")
-	_, err := request.GetConnection().GetTCPConnection().Write([]byte("before ping..."))
+	_, err := request.GetConnection().GetTCPConnection().Write([]byte("before ping...\n"))
 	if err != nil {
 		fmt.Println("Test Call Router PreHander err ", err)
 	}
 }
 
 // Test Gandle
-func (p *PingRouter) Hander(request zinterface.IRequest) {
+func (p *PingRouter) Handle(request zinterface.IRequest) {
 	fmt.Println("Test Call Router Hander")
-	_, err := request.GetConnection().GetTCPConnection().Write([]byte("poing...ping...ping..."))
+	_, err := request.GetConnection().GetTCPConnection().Write([]byte("poing...ping...ping...\n"))
 	if err != nil {
 		fmt.Println("Test Call Router Hander err ", err)
 	}
 }
 
 // Test PostHandle
-func (p *PingRouter) PostHander(request zinterface.IRequest) {
+func (p *PingRouter) PostHandle(request zinterface.IRequest) {
 	fmt.Println("Test Call Router PostHander")
-	_, err := request.GetConnection().GetTCPConnection().Write([]byte("after ping..."))
+	_, err := request.GetConnection().GetTCPConnection().Write([]byte("after ping...\n"))
 	if err != nil {
 		fmt.Println("Test Call Router PostHander err ", err)
 	}
