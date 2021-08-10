@@ -3,6 +3,7 @@ package znet
 import (
 	"fmt"
 	"net"
+	"src/utils"
 	"src/zinterface"
 )
 
@@ -18,10 +19,10 @@ type Server struct {
 
 func NewServer(name string) zinterface.IServer {
 	s := &Server{
-		Name:       name,
+		Name:       utils.GlobalObject.Name,
 		IPVersrion: "tcp4",
-		IP:         "0.0.0.0",
-		Port:       8001,
+		IP:         utils.GlobalObject.Host,
+		Port:       utils.GlobalObject.TcpPort,
 		Router:     nil,
 	}
 
@@ -29,6 +30,7 @@ func NewServer(name string) zinterface.IServer {
 }
 
 func (s *Server) Start() {
+	fmt.Printf("[Zinx] Server Name: %s\n", utils.GlobalObject.Name)
 	fmt.Printf("[Start] Server Listenner at IP :%s, Port %d, is starting\n", s.IP, s.Port)
 
 	go func() {
