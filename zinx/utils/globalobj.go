@@ -53,7 +53,7 @@ func (g *GlobalObj) Reload() {
 func init() {
 	GlobalObject = &GlobalObj{
 		Name:           "ZinxServerAPP",
-		Version:        "V0,4",
+		Version:        "V0.4",
 		TcpPort:        8001,
 		Host:           "0.0.0.0",
 		MaxConn:        1000,
@@ -61,5 +61,5 @@ func init() {
 	}
 
 	// 尝试conf/zinx.json加载自定义参数
-	GlobalObject.Reload()
+	// GlobalObject.Reload()
 }
