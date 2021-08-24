@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"net"
 	"src/znet"
 	"time"
@@ -35,9 +36,31 @@ func main() {
 
 		// 服务器回复msg消息，MsgId：1，ping..ping..ping
 
-		// 先读取流中的head部分得到ID和datalen
+		// 1-先读取流中的head部分得到ID和datalen
+		binaryHead := make([]byte, dp.GetHeadLen())
+		if _, err := io.ReadFull(conn, binaryHead); err != nil {
+			fmt.Println("read head error", err)
+			break
+		}
 
-		// 再根据datalen读取data
+		// 将二进制head拆包到msg结构体中
+		msgHead, err := dp.Unpack(binaryHead)
+		if err != nil {
+			fmt.Println("client unpack msghead error:", err)
+			break
+		}
+
+		if msgHead.GetDataLen() > 0 {
+			// 2-再根据datalen读取data
+			msg := msgHead.(*znet.Message)
+			msg.Data = make([]byte, msg.GetDataLen())
+
+			if _, err := io.ReadFull(conn, msg.Data); err != nil {
+				fmt.Println("read msg data error:", err)
+				return
+			}
+			fmt.Println("---->recv msg id=", msg.Id, ", len=", msg.DataLen, ", data=", msg.Data)
+		}
 
 		// cpu阻塞
 		time.Sleep(1 * time.Second)
