@@ -1,0 +1,6 @@
+{
+    "Name":"zinx v0.5 demoServerApp",
+    "Host":"127.0.0.1",
+    "TcpPost":8001,
+    "MaxConn":3
+}
